@@ -109,7 +109,7 @@ git clone https://github.com/Rithish-2914/Prescription_Analyzer
 cd Prescription_Analyzer
 2️⃣ Backend Setup
 cd backend
-pip install -r requirements.txt
+pip install python-multipart
 uvicorn main:app --reload
 
 Backend will start at:
