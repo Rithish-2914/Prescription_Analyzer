@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Explainer | AI Medical Interpreter</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Output Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6', // Teal
+                            600: '#0d9488',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800 antialiased selection:bg-medical-500 selection:text-white">
+
+    <!-- Header / Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <!-- Icon -->
+                    <div class="bg-medical-500 text-white p-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Rx Explainer</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight mb-4">
+                Understand your <br class="hidden md:block"/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-medical-500 to-blue-600">Medical Prescriptions</span> Instantly
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Paste your prescription text or upload an image. Our AI safely converts confusing medical abbreviations into clear, easy-to-read instructions.
+            </p>
+        </div>
+
+        <!-- Input Section (Glassmorphism Card) -->
+        <div class="bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-3xl p-6 md:p-8 mb-10 transition-all duration-300 hover:shadow-2xl relative overflow-hidden">
+            <!-- Decorative Blob -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-medical-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button id="tab-text" class="flex-1 pb-4 text-center font-medium text-medical-600 border-b-2 border-medical-500 transition-colors">
+                    Paste Text
+                </button>
+                <button id="tab-image" class="flex-1 pb-4 text-center font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition-colors">
+                    Upload Image
+                </button>
+            </div>
+
+            <!-- Text Input Area -->
+            <div id="text-input-area" class="block animate-fade-in">
+                <label for="prescription-text" class="block text-sm font-medium text-gray-700 mb-2">Prescription Details</label>
+                <textarea id="prescription-text" rows="4" 
+                    class="w-full rounded-xl border-gray-300 border shadow-sm focus:border-medical-500 focus:ring-medical-500 bg-white/50 p-4 transition-all resize-none text-gray-800"
+                    placeholder="e.g. Tab Paracetamol 500mg BD × 5 days..."></textarea>
+            </div>
+
+            <!-- Image Upload Area (Hidden initially) -->
+            <div id="image-input-area" class="hidden animate-fade-in relative">
+                <div id="drop-zone" class="mt-1 flex justify-center px-6 pt-10 pb-12 border-2 border-gray-300 border-dashed rounded-xl hover:border-medical-500 hover:bg-medical-50 transition-all cursor-pointer group bg-white/50">
+                    <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-medical-500 transition-colors" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600 justify-center">
+                            <label for="file-upload" class="relative cursor-pointer bg-transparent rounded-md font-medium text-medical-600 hover:text-medical-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-medical-500">
+                                <span>Upload a file</span>
+                                <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
+                            </label>
+                            <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                </div>
+                <!-- Preview -->
+                <div id="image-preview-container" class="hidden mt-4 relative rounded-xl overflow-hidden border border-gray-200">
+                    <img id="image-preview" src="" alt="Prescription Preview" class="w-full h-auto max-h-64 object-contain bg-gray-100">
+                    <button id="remove-image" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition-colors shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="mt-6">
+                <button id="btn-explain" class="w-full bg-medical-600 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-medical-500/30 hover:bg-medical-700 hover:shadow-medical-600/40 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+                    <span>Explain Prescription</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Loading Indicator -->
+             <div id="loading-indicator" class="hidden mt-6 flex justify-center items-center gap-3 text-medical-600 animate-pulse">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-medical-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="font-medium text-sm">Interpreting details...</span>
+            </div>
+        </div>
+
+        <!-- Output Section (Hidden initially) -->
+        <div id="output-section" class="hidden animate-slide-up space-y-6">
+            
+            <!-- Simple Explanation Alert -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-32 h-32 text-blue-500">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-bold text-blue-800 uppercase tracking-wider mb-2">Plain English Instructions</h3>
+                <p id="simple-explanation-text" class="text-xl md:text-2xl font-medium text-blue-900 leading-snug"></p>
+            </div>
+
+            <!-- Structured Data Grid -->
+            <div class="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden">
+                <div class="border-b border-gray-100 bg-gray-50/50 px-6 py-4">
+                    <h3 class="font-semibold text-gray-900">Extracted Details</h3>
+                </div>
+                <!-- CSS Grid for details -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 divide-y sm:divide-y-0 divide-gray-100">
+                    
+                    <div class="p-6 border-b sm:border-b-0 sm:border-r border-gray-100 hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Medicine Name</p>
+                        <p id="data-medicine" class="text-lg font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="p-6 border-b sm:border-b-0 md:border-r border-gray-100 hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Dosage</p>
+                        <p id="data-dosage" class="text-lg font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="p-6 border-b sm:border-b-0 border-gray-100 hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Frequency</p>
+                        <p id="data-frequency" class="text-lg font-semibold text-medical-600">-</p>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="p-6 border-t border-gray-100 sm:border-b-0 sm:border-r hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Timing</p>
+                        <p id="data-timing" class="text-lg font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="p-6 border-t sm:border-b-0 md:border-r border-gray-100 hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Duration</p>
+                        <p id="data-duration" class="text-lg font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="p-6 border-t md:border-b-0 border-gray-100 hover:bg-gray-50 transition-colors">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Special Instructions</p>
+                        <p id="data-instructions" class="text-lg font-semibold text-amber-600">-</p>
+                    </div>
+                </div>
+                
+                <!-- OCR Fallback Context Container -->
+                <div id="ocr-context-container" class="hidden bg-gray-50 p-4 border-t border-gray-100">
+                     <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Raw Text from Image</p>
+                     <p id="ocr-raw-text" class="text-sm font-mono text-gray-600 p-2 bg-white border border-gray-200 rounded-md"></p>
+                </div>
+            </div>
+
+             <!-- Start Over -->
+             <div class="text-center pt-4">
+                <button id="btn-reset" class="text-sm font-medium text-gray-500 hover:text-gray-800 underline transition-colors">Analyze another prescription</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Error Toast -->
+    <div id="error-toast" class="fixed bottom-4 right-4 bg-red-600 text-white px-6 py-4 rounded-xl shadow-2xl transform transition-transform duration-300 translate-y-24 opacity-0 z-50 flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div>
+             <p class="font-bold text-sm">Error parsing prescription</p>
+             <p id="error-message" class="text-xs opacity-90">Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
